@@ -1,3 +1,3 @@
 # Exercism
 
-My submitions to [Exercism](exercism.org).
+My submissions to [Exercism](exercism.org).
