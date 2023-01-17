@@ -1,11 +1,22 @@
 class WordCount {
-  final exp = RegExp(r"(\\'$|[^'\n])\w+");
+  final exp = RegExp(r'''(\w+'*\w+|\w+|^>)''');
 
   Map<String, int> countWords(String s) {
-    final matches = exp.allMatches('Hey hey \nho\'s'.toLowerCase());
-    matches.forEach((element) {
-      print(element[0]);
-    });
-    return {};
+    final wordsAndCount = <String, int>{};
+
+    exp.allMatches(s.replaceAll(r'\n', '').toLowerCase()).forEach(
+      (match) {
+        final word = match[0];
+        if (word != null) {
+          wordsAndCount.update(
+            word,
+            (value) => value + 1,
+            ifAbsent: () => 1,
+          );
+        }
+      },
+    );
+
+    return wordsAndCount;
   }
 }
