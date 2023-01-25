@@ -42,7 +42,7 @@ class Forth {
           );
           _stack = <int>[arithmaticResult];
         } catch (e) {
-          if (e is UnsupportedError) throw Exception('Division by zero');
+          throw e;
         }
       }
 
@@ -66,8 +66,8 @@ extension on int {
         return this - number;
       case '*':
         return (this * number).toInt();
-      // todo: handle division by zero
       case '/':
+        if (number == 0) throw Exception('Division by zero');
         return this ~/ number;
       default:
         return 0;
