@@ -171,7 +171,7 @@ void dup() {
     var forth = Forth();
     forth.evaluate('1 2 dup');
     expect(forth.stack, equals(<int>[1, 2, 2]));
-  }, skip: true);
+  }, skip: false);
 
   test('errors if there is nothing on the stack', () {
     var forth = Forth();
@@ -179,7 +179,7 @@ void dup() {
       () => forth.evaluate('dup'),
       throwsEmptyStack,
     );
-  }, skip: true);
+  }, skip: false);
 }
 
 void drop() {
@@ -187,13 +187,13 @@ void drop() {
     var forth = Forth();
     forth.evaluate('1 drop');
     expect(forth.stack, equals(<int>[]));
-  }, skip: true);
+  }, skip: false);
 
   test('removes the top value on the stack if it is not the only one', () {
     var forth = Forth();
     forth.evaluate('1 2 drop');
     expect(forth.stack, equals(<int>[1]));
-  }, skip: true);
+  }, skip: false);
 
   test('errors if there is nothing on the stack', () {
     var forth = Forth();
@@ -201,7 +201,7 @@ void drop() {
       () => forth.evaluate('drop'),
       throwsEmptyStack,
     );
-  }, skip: true);
+  }, skip: false);
 }
 
 void swap() {
@@ -209,14 +209,14 @@ void swap() {
     var forth = Forth();
     forth.evaluate('1 2 swap');
     expect(forth.stack, equals(<int>[2, 1]));
-  }, skip: true);
+  }, skip: false);
 
   test('swaps the top two values on the stack if they are not the only ones',
       () {
     var forth = Forth();
     forth.evaluate('1 2 3 swap');
     expect(forth.stack, equals(<int>[1, 3, 2]));
-  }, skip: true);
+  }, skip: false);
 
   test('errors if there is nothing on the stack', () {
     var forth = Forth();
@@ -224,7 +224,7 @@ void swap() {
       () => forth.evaluate('swap'),
       throwsEmptyStack,
     );
-  }, skip: true);
+  }, skip: false);
 
   test('errors if there is only one value on the stack', () {
     var forth = Forth();
@@ -232,7 +232,7 @@ void swap() {
       () => forth.evaluate('1 swap'),
       throwsEmptyStack,
     );
-  }, skip: true);
+  }, skip: false);
 }
 
 void over() {

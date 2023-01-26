@@ -1,14 +1,9 @@
 import 'package:collection/collection.dart';
 
 class Forth {
-  var _stack = <int>[];
+  var stack = <int>[];
 
   final emptyStackException = Exception('Stack empty');
-
-  List<int> get stack {
-    if (_stack.isEmpty) throw emptyStackException;
-    return _stack;
-  }
 
   final List<String> arithmatics = ['+', '-', '*', '/'];
   final List<String> manipulations = ['DUP', 'DROP', 'SWAP', 'OVER'];
@@ -16,20 +11,25 @@ class Forth {
 
   void evaluate(String s) {
     final operations = s.trim().split(' ').map((e) => e.toUpperCase()).toList();
-    final numbers = operations.where((element) => element.isNumeric);
-    final arithmaticsAndManipulations = operations.where((element) =>
-        arithmatics.contains(element) || manipulations.contains(element));
 
     if (operations.isValidDefinition) {
       setCustomDefinition(operations);
       return;
     }
 
+    final numbers = operations.where((element) => element.isNumeric);
+    final arithmaticsAndManipulations = operations.where((element) =>
+        arithmatics.contains(element) || manipulations.contains(element));
+
     operations.forEachIndexed((index, _operation) {
-      if (numbers.length <= 1 && arithmaticsAndManipulations.length > 0) {
+      // TODO: refactor
+      if (((numbers.length <= 1 && arithmatics.contains(_operation)) ||
+              (numbers.length < 1 && manipulations.contains(_operation))) &&
+          arithmaticsAndManipulations.length > 0) {
         throw emptyStackException;
       }
 
+      // TODO: refactor
       final operation = customDefinitions.containsKey(_operation)
           ? customDefinitions.containsKey(customDefinitions[_operation])
               ? customDefinitions[customDefinitions[_operation]]!
@@ -42,12 +42,12 @@ class Forth {
       });
 
       if (operation.isNumeric) {
-        _stack.add(operation.toInt);
+        stack.add(operation.toInt);
       }
 
       if (arithmatics.contains(operation)) {
         try {
-          final arithmaticResult = _stack.reduce(
+          final arithmaticResult = stack.reduce(
             (value, number) {
               return value.performArithmatic(
                 number,
@@ -55,13 +55,29 @@ class Forth {
               );
             },
           );
-          _stack = <int>[arithmaticResult];
+          stack = <int>[arithmaticResult];
         } catch (e) {
           throw e;
         }
       }
 
-      if (manipulations.contains(operation)) {}
+      print(operation);
+
+      if (manipulations.contains(operation)) {
+        switch (operation) {
+          case 'DUP':
+            stack.add(stack.last);
+            break;
+          case 'DROP':
+            stack.removeLast();
+            break;
+          case 'SWAP':
+            if (stack.length < 2) throw emptyStackException;
+            final removedValue = stack.removeAt(stack.length - 1);
+            stack.insert(stack.length - 1, removedValue);
+            break;
+        }
+      }
     });
 
     print(stack);
