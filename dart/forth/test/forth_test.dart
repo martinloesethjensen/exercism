@@ -165,7 +165,7 @@ void dup() {
     var forth = Forth();
     forth.evaluate('1 dup');
     expect(forth.stack, equals(<int>[1, 1]));
-  }, skip: true);
+  }, skip: false);
 
   test('copies the top value on the stack', () {
     var forth = Forth();

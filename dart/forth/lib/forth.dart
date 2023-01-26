@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 class Forth {
   var _stack = <int>[];
 
@@ -10,21 +12,34 @@ class Forth {
 
   final List<String> arithmatics = ['+', '-', '*', '/'];
   final List<String> manipulations = ['DUP', 'DROP', 'SWAP', 'OVER'];
-  var customDefinitions = <String, String>{};
-
-  // TODO regex for custom syntax definitions
+  final customDefinitions = <String, String>{};
 
   void evaluate(String s) {
-    final operations = s.split(' ').map((e) => e.toUpperCase());
+    final operations = s.trim().split(' ').map((e) => e.toUpperCase()).toList();
     final numbers = operations.where((element) => element.isNumeric);
     final arithmaticsAndManipulations = operations.where((element) =>
         arithmatics.contains(element) || manipulations.contains(element));
-    for (final operation in operations) {
+
+    if (operations.isValidDefinition) {
+      setCustomDefinition(operations);
+      return;
+    }
+
+    operations.forEachIndexed((index, _operation) {
       if (numbers.length <= 1 && arithmaticsAndManipulations.length > 0) {
         throw emptyStackException;
       }
 
-      // TODO: handle custom syntax definitions
+      final operation = customDefinitions.containsKey(_operation)
+          ? customDefinitions.containsKey(customDefinitions[_operation])
+              ? customDefinitions[customDefinitions[_operation]]!
+              : customDefinitions[_operation]!
+          : _operation;
+
+      // TODO: loop custom operations
+      operation.split(' ').forEach((element) {
+        print(element);
+      });
 
       if (operation.isNumeric) {
         _stack.add(operation.toInt);
@@ -47,14 +62,37 @@ class Forth {
       }
 
       if (manipulations.contains(operation)) {}
-    }
+    });
+
     print(stack);
+  }
+
+  void setCustomDefinition(List<String> operations) {
+    final definitionOperations = operations.definitionOperations;
+
+    // TODO lookup and update definitions by looping
+    final customOperations = customDefinitions.containsKey(definitionOperations)
+        ? customDefinitions[definitionOperations]!
+        : definitionOperations;
+
+    customDefinitions.update(
+      operations[1],
+      (_) => customOperations,
+      ifAbsent: () => customOperations,
+    );
+
+    print(customDefinitions);
   }
 }
 
 extension on String {
   bool get isNumeric => num.tryParse(this) != null;
   int get toInt => isNumeric ? int.parse(this) : 0;
+}
+
+extension on List<String> {
+  bool get isValidDefinition => first == ':' && last == ';';
+  String get definitionOperations => sublist(2, length - 1).join(' ');
 }
 
 extension on int {
