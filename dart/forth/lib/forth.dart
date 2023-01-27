@@ -96,17 +96,10 @@ class Forth {
       },
     ).join(' ');
 
-    print(definitionOperations);
-
-    // TODO lookup and update definitions by looping
-    final customOperations = customDefinitions.containsKey(definitionOperations)
-        ? customDefinitions[definitionOperations]!
-        : definitionOperations;
-
     customDefinitions.update(
       operations[1],
-      (_) => customOperations,
-      ifAbsent: () => customOperations,
+      (_) => definitionOperations,
+      ifAbsent: () => definitionOperations,
     );
 
     print(customDefinitions);
