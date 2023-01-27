@@ -240,13 +240,13 @@ void over() {
     var forth = Forth();
     forth.evaluate('1 2 over');
     expect(forth.stack, equals(<int>[1, 2, 1]));
-  }, skip: true);
+  }, skip: false);
 
   test('copies the second element if there are more than two', () {
     var forth = Forth();
     forth.evaluate('1 2 3 over');
     expect(forth.stack, equals(<int>[1, 2, 3, 2]));
-  }, skip: true);
+  }, skip: false);
 
   test('errors if there is nothing on the stack', () {
     var forth = Forth();
@@ -254,7 +254,7 @@ void over() {
       () => forth.evaluate('over'),
       throwsEmptyStack,
     );
-  }, skip: true);
+  }, skip: false);
 
   test('errors if there is only one value on the stack', () {
     var forth = Forth();
@@ -262,7 +262,7 @@ void over() {
       () => forth.evaluate('1 over'),
       throwsEmptyStack,
     );
-  }, skip: true);
+  }, skip: false);
 }
 
 void userDefinedWords() {
@@ -271,14 +271,14 @@ void userDefinedWords() {
     forth.evaluate(': dup-twice dup dup ;');
     forth.evaluate('1 dup-twice');
     expect(forth.stack, equals(<int>[1, 1, 1]));
-  }, skip: true);
+  }, skip: false);
 
   test('execute in the right order', () {
     var forth = Forth();
     forth.evaluate(': countup 1 2 3 ;');
     forth.evaluate('countup');
     expect(forth.stack, equals(<int>[1, 2, 3]));
-  }, skip: true);
+  }, skip: false);
 
   test('can override other user-defined words', () {
     var forth = Forth();
@@ -286,21 +286,21 @@ void userDefinedWords() {
     forth.evaluate(': foo dup dup ;');
     forth.evaluate('1 foo');
     expect(forth.stack, equals(<int>[1, 1, 1]));
-  }, skip: true);
+  }, skip: false);
 
   test('can override built-in words', () {
     var forth = Forth();
     forth.evaluate(': swap dup ;');
     forth.evaluate('1 swap');
     expect(forth.stack, equals(<int>[1, 1]));
-  }, skip: true);
+  }, skip: false);
 
   test('can override built-in operators', () {
     var forth = Forth();
     forth.evaluate(': + * ;');
     forth.evaluate('3 4 +');
     expect(forth.stack, equals(<int>[12]));
-  }, skip: true);
+  }, skip: false);
 
   test('can use different words with the same name', () {
     var forth = Forth();
@@ -309,7 +309,7 @@ void userDefinedWords() {
     forth.evaluate(': foo 6 ;');
     forth.evaluate('bar foo');
     expect(forth.stack, equals(<int>[5, 6]));
-  }, skip: true);
+  }, skip: false);
 
   test('can define word that uses word with the same name', () {
     var forth = Forth();
@@ -317,7 +317,7 @@ void userDefinedWords() {
     forth.evaluate(': foo foo 1 + ;');
     forth.evaluate('foo');
     expect(forth.stack, equals(<int>[11]));
-  }, skip: true);
+  }, skip: false);
 
   test('cannot redefine non-negative numbers', () {
     var forth = Forth();

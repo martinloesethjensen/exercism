@@ -10,7 +10,20 @@ class Forth {
   final customDefinitions = <String, String>{};
 
   void evaluate(String s) {
-    final operations = s.trim().split(' ').map((e) => e.toUpperCase()).toList();
+    final commands = s.trim().split(' ');
+    final operations = commands
+        .map((e) => e.toUpperCase())
+        .map((e) {
+          if (!commands.isValidDefinition && customDefinitions.containsKey(e)) {
+            return customDefinitions[e]!;
+          }
+          return e;
+        })
+        .join(' ')
+        .split(' ')
+        .toList();
+
+    print('☕' + operations.toString());
 
     if (operations.isValidDefinition) {
       setCustomDefinition(operations);
@@ -21,25 +34,13 @@ class Forth {
     final arithmaticsAndManipulations = operations.where((element) =>
         arithmatics.contains(element) || manipulations.contains(element));
 
-    operations.forEachIndexed((index, _operation) {
+    operations.forEachIndexed((index, operation) {
       // TODO: refactor
-      if (((numbers.length <= 1 && arithmatics.contains(_operation)) ||
-              (numbers.length < 1 && manipulations.contains(_operation))) &&
+      if (((numbers.length <= 1 && arithmatics.contains(operation)) ||
+              (numbers.length < 1 && manipulations.contains(operation))) &&
           arithmaticsAndManipulations.length > 0) {
         throw emptyStackException;
       }
-
-      // TODO: refactor
-      final operation = customDefinitions.containsKey(_operation)
-          ? customDefinitions.containsKey(customDefinitions[_operation])
-              ? customDefinitions[customDefinitions[_operation]]!
-              : customDefinitions[_operation]!
-          : _operation;
-
-      // TODO: loop custom operations
-      operation.split(' ').forEach((element) {
-        print(element);
-      });
 
       if (operation.isNumeric) {
         stack.add(operation.toInt);
@@ -61,8 +62,6 @@ class Forth {
         }
       }
 
-      print(operation);
-
       if (manipulations.contains(operation)) {
         switch (operation) {
           case 'DUP':
@@ -76,6 +75,10 @@ class Forth {
             final removedValue = stack.removeAt(stack.length - 1);
             stack.insert(stack.length - 1, removedValue);
             break;
+          case 'OVER':
+            if (stack.length < 2) throw emptyStackException;
+            stack.add(stack.elementAt(stack.length - 2));
+            break;
         }
       }
     });
@@ -84,7 +87,16 @@ class Forth {
   }
 
   void setCustomDefinition(List<String> operations) {
-    final definitionOperations = operations.definitionOperations;
+    final definitionOperations = operations.definitionOperations.split(' ').map(
+      (operation) {
+        if (customDefinitions.containsKey(operation)) {
+          return customDefinitions[operation]!;
+        }
+        return operation;
+      },
+    ).join(' ');
+
+    print(definitionOperations);
 
     // TODO lookup and update definitions by looping
     final customOperations = customDefinitions.containsKey(definitionOperations)
