@@ -12,47 +12,77 @@ class Forth {
   void evaluate(String s) {
     final commands = s.trim().split(' ');
     final operations = commands
-        .map((e) => e.toUpperCase())
-        .map((e) {
-          if (!commands.isValidDefinition && customDefinitions.containsKey(e)) {
-            return customDefinitions[e]!;
-          }
-          return e;
-        })
+
+        /// We want all in upper case
+        .map((op) => op.toUpperCase())
+
+        /// Replace with value from custom definition if it exists.
+        .map(
+          (op) {
+            if (!commands.isValidDefinition &&
+                customDefinitions.containsKey(op)) {
+              return customDefinitions[op]!;
+            }
+            return op;
+          },
+        )
+
+        /// Need to get it back to a string as some definition value
+        /// could be parsed as list of values.
         .join(' ')
         .split(' ')
         .toList();
 
-    print('☕' + operations.toString());
-
+    /// If valid custom definition then set store it.
+    /// Else throw exception.
+    /// Do an early return.
     if (operations.isValidDefinition) {
+      if (operations.length >= 4 && operations.elementAt(1).isNumeric) {
+        throw Exception('Invalid definition');
+      }
       setCustomDefinition(operations);
       return;
     }
 
-    final numbers = operations.where((element) => element.isNumeric);
-    final arithmaticsAndManipulations = operations.where((element) =>
-        arithmatics.contains(element) || manipulations.contains(element));
+    /// Check for valid commands:
+    /// - number
+    /// - arithmatic operation
+    /// - manipulation operation
+    final validCommand = operations.every((op) {
+      return op.isNumeric ||
+          arithmatics.contains(op) ||
+          manipulations.contains(op);
+    });
 
-    operations.forEachIndexed((index, operation) {
-      // TODO: refactor
-      if (((numbers.length <= 1 && arithmatics.contains(operation)) ||
-              (numbers.length < 1 && manipulations.contains(operation))) &&
+    /// Throw exception on invalid command.
+    if (!validCommand) throw Exception('Unknown command');
+
+    /// Gather numbers
+    final numbers = operations.where((op) => op.isNumeric);
+
+    /// Gather arithmatics and manipulations
+    final arithmaticsAndManipulations = operations.where(
+      (op) => arithmatics.contains(op) || manipulations.contains(op),
+    );
+
+    operations.forEachIndexed((index, op) {
+      if (((numbers.length <= 1 && arithmatics.contains(op)) ||
+              (numbers.length < 1 && manipulations.contains(op))) &&
           arithmaticsAndManipulations.length > 0) {
         throw emptyStackException;
       }
 
-      if (operation.isNumeric) {
-        stack.add(operation.toInt);
+      if (op.isNumeric) {
+        stack.add(op.toInt);
       }
 
-      if (arithmatics.contains(operation)) {
+      if (arithmatics.contains(op)) {
         try {
           final arithmaticResult = stack.reduce(
             (value, number) {
               return value.performArithmatic(
                 number,
-                arithmatics.firstWhere((element) => element == operation),
+                arithmatics.firstWhere((element) => element == op),
               );
             },
           );
@@ -62,8 +92,8 @@ class Forth {
         }
       }
 
-      if (manipulations.contains(operation)) {
-        switch (operation) {
+      if (manipulations.contains(op)) {
+        switch (op) {
           case 'DUP':
             stack.add(stack.last);
             break;
@@ -82,8 +112,6 @@ class Forth {
         }
       }
     });
-
-    print(stack);
   }
 
   void setCustomDefinition(List<String> operations) {
@@ -101,8 +129,6 @@ class Forth {
       (_) => definitionOperations,
       ifAbsent: () => definitionOperations,
     );
-
-    print(customDefinitions);
   }
 }
 
