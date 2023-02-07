@@ -7,26 +7,22 @@ class Luhn {
     /// Strip spaces
     final str = s.replaceAll(nonSpaceExp, '');
 
-    if (str.length <= 1) return false;
+    /// Need to have length more than 1 and have match for numbers only.
+    if (str.length <= 1 || !nonDigitExp.hasMatch(str)) return false;
 
-    /// Should not contain any non digits
-    RegExpMatch? match = nonDigitExp.firstMatch(str);
-    if (match == null) return false;
+    /// Reverse and parse to int before mapping and
+    /// doubling logic for the luhn algorithm.
+    /// Then fold the values.
+    final result = str
+        .split('')
+        .reversed
+        .map((e) => int.parse(e))
+        .mapIndexed((index, number) {
+      if (index.isEven) return number;
+      final doubled = number * 2;
+      return doubled > 9 ? doubled - 9 : doubled;
+    }).fold(0, (prev, curr) => prev + curr);
 
-    var isDouble = true;
-    final _result = match
-            .group(0)
-            ?.split('')
-            .reversed
-            .map((e) => int.parse(e))
-            .mapIndexed((index, number) {
-          isDouble = !isDouble;
-          if (!isDouble) return number;
-          final doubled = number * 2;
-          return doubled > 9 ? doubled - 9 : doubled;
-        }).fold(0, (previousValue, element) => previousValue + element) ??
-        0;
-
-    return _result % 10 == 0;
+    return result % 10 == 0;
   }
 }
