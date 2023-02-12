@@ -1,10 +1,7 @@
 class Acronym {
-  String abbreviate(String s) {
-    return s
-        .replaceAll(RegExp('[-_]'), ' ')
-        .split(' ')
-        .where((word) => word.isNotEmpty)
-        .map((word) => word.substring(0, 1).toUpperCase())
-        .join();
-  }
+  String abbreviate(String s) => s
+      .split(RegExp(r'[\s-_]'))
+      .where((word) => word.isNotEmpty)
+      .map((word) => word[0].toUpperCase())
+      .join();
 }
