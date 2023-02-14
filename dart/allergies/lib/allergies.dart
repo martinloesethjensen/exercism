@@ -1,5 +1,5 @@
 class Allergies {
-  final allergies = {
+  final allergies = <String, int>{
     'eggs': 1,
     'peanuts': 2,
     'shellfish': 4,
@@ -10,23 +10,9 @@ class Allergies {
     'cats': 128,
   };
 
-  bool allergicTo(String input, int score) => list(score).contains(input);
+  bool allergicTo(String allergy, int score) =>
+      score & allergies[allergy]! != 0;
 
-  List<String> list(int score) {
-    if (score > 256) score -= 256;
-    return allergies.entries
-        .toList()
-        .reversed
-        .where((allergy) {
-          if (score >= allergy.value) {
-            score -= allergy.value;
-            return true;
-          }
-          return false;
-        })
-        .map((e) => e.key)
-        .toList()
-        .reversed
-        .toList();
-  }
+  List<String> list(int score) =>
+      allergies.keys.where((allergy) => allergicTo(allergy, score)).toList();
 }
