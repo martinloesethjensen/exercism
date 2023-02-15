@@ -1,35 +1,38 @@
 final vowelRegex = RegExp(r'\b[aeiou]\w*', caseSensitive: false);
+final vowelSectionRegex = RegExp(r'[aeiou]\w*', caseSensitive: false);
 final consonantRegex = RegExp(r'\b[^\Waeiou]\w*', caseSensitive: false);
 final quRegex = RegExp(r'qu', caseSensitive: false);
 
 String translate(String phrase) {
-  final result = phrase.split(' ').map((e) {
+  final result = phrase.split(' ').map((word) {
     final ay = 'ay';
-    if (e.isVowel || e.startsWith('xr') || e.startsWith('yt')) {
-      return e + ay;
-    } else if (e.isConsonant) {
-      if (e.startsWith('th') && e.substring(2, 3).isVowel) {
-        return e.substring(2) + e.substring(0, 2) + ay;
+
+    if (word.isVowel || word.startsWith('xr') || word.startsWith('yt')) {
+      return word + ay;
+    }
+
+    if (word.isConsonant) {
+      if (word.startsWith('th') && word.substring(2, 3).isVowel) {
+        return word.substring(2) + word.substring(0, 2) + ay;
       }
 
-      if (e.contains('y')) {
-        final yIndex = e.startsWith('y') ? e.indexOf('y') + 1 : e.indexOf('y');
-        return e.substring(yIndex) + e.substring(0, yIndex) + ay;
+      if (word.contains('y')) {
+        final yIndex =
+            word.startsWith('y') ? word.indexOf('y') + 1 : word.indexOf('y');
+        return word.substring(yIndex) + word.substring(0, yIndex) + ay;
       }
 
-      if (quRegex.hasMatch(e)) {
-        final match = quRegex.firstMatch(e)?.group(0) ?? '';
-        final splitted = e.split(quRegex).reversed.join().trim();
-        return (splitted[0] != 'q' ? splitted : splitted) + match + ay;
+      if (quRegex.hasMatch(word)) {
+        final match = quRegex.firstMatch(word)?.group(0) ?? '';
+        final splitted = word.split(quRegex).reversed.join().trim();
+        return splitted + match + ay;
       }
-      final match =
-          RegExp(r'[aeiou]\w*', caseSensitive: false).firstMatch(e)?.group(0) ??
-              '';
-      final splitted =
-          e.split(RegExp(r'[aeiou]\w*', caseSensitive: false)).join().trim();
+
+      final match = vowelSectionRegex.firstMatch(word)?.group(0) ?? '';
+      final splitted = word.split(vowelSectionRegex).join().trim();
       return match + splitted + ay;
     }
-    return e;
+    return word;
   }).join(' ');
   return result;
 }
