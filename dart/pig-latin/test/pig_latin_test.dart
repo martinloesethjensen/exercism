@@ -100,7 +100,7 @@ void main() {
       test('word beginning with xr', () {
         final result = pigLatin.translate('xray');
         expect(result, equals('xrayay'));
-      }, skip: true);
+      }, skip: false);
     });
 
     group('position of y in a word determines if it is a consonant or a vowel',
@@ -108,24 +108,24 @@ void main() {
       test('y is treated like a consonant at the beginning of a word', () {
         final result = pigLatin.translate('yellow');
         expect(result, equals('ellowyay'));
-      }, skip: true);
+      }, skip: false);
 
       test('y is treated like a vowel at the end of a consonant cluster', () {
         final result = pigLatin.translate('rhythm');
         expect(result, equals('ythmrhay'));
-      }, skip: true);
+      }, skip: false);
 
       test('y as second letter in two letter word', () {
         final result = pigLatin.translate('my');
         expect(result, equals('ymay'));
-      }, skip: true);
+      }, skip: false);
     });
 
     group('phrases are translated', () {
       test('a whole phrase', () {
         final result = pigLatin.translate('quick fast run');
         expect(result, equals('ickquay astfay unray'));
-      }, skip: true);
+      }, skip: false);
     });
   });
 }
