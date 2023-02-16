@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="GigasecondTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-02-15T10:41:43" hostname="martins-mbp.lan" time="0.024">
+  <properties/>
+  <testcase name="full time specified" classname="GigasecondTest" time="0.023"/>
+  <testcase name="date only specification of time" classname="GigasecondTest" time="0.001"/>
+  <testcase name="full time with day roll-over" classname="GigasecondTest" time="0.0"/>
+  <testcase name="second test for date only specification of time" classname="GigasecondTest" time="0.0"/>
+  <testcase name="third test for date only specification of time" classname="GigasecondTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
