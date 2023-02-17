@@ -1,29 +1,45 @@
 class BinarySearchTree {
-  BinarySearchTree(this.data);
+  late final Node root;
 
-  BinarySearchTree get root => this;
-
-  String data;
-  BinarySearchTree? left;
-  BinarySearchTree? right;
-
-  List<String> get sortedData {
-    return <String>[];
+  BinarySearchTree(String data) {
+    root = Node(data);
   }
 
+  List<String> get sortedData => root.sortedData;
+
   void insert(String data) {
-    final n = data.asInt;
-    if (n <= root.data.asInt) {
-      if (left == null) {
-        left = BinarySearchTree(data);
+    root.insert(data);
+  }
+}
+
+class Node {
+  final String data;
+  Node? left;
+  Node? right;
+
+  Node(this.data);
+
+  List<String> get sortedData {
+    final result = <String>[];
+    if (left.isNotNull) result.addAll(left!.sortedData);
+    result.add(data);
+    if (right.isNotNull) result.addAll(right!.sortedData);
+    return result;
+  }
+
+  void insert(String value) {
+    final n = value.asInt;
+    if (n <= data.asInt) {
+      if (left.isNull) {
+        left = Node(value);
       } else {
-        left!.insert(data);
+        left!.insert(value);
       }
-    } else if (n > root.data.asInt) {
-      if (right == null) {
-        right = BinarySearchTree(data);
+    } else {
+      if (right.isNull) {
+        right = Node(value);
       } else {
-        right!.insert(data);
+        right!.insert(value);
       }
     }
   }
@@ -33,7 +49,7 @@ extension on String {
   int get asInt => int.parse(this);
 }
 
-extension on String? {
+extension on Object? {
   bool get isNotNull => this != null;
   bool get isNull => !isNotNull;
 }

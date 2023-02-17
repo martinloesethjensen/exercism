@@ -57,25 +57,25 @@ void main() {
         final bst = BinarySearchTree('2');
 
         expect(bst.sortedData, equals(['2']));
-      }, skip: true);
+      }, skip: false);
 
       test('can sort if second number is smaller than first', () {
         final bst = BinarySearchTree('2')..insert('1');
 
         expect(bst.sortedData, equals(['1', '2']));
-      }, skip: true);
+      }, skip: false);
 
       test('can sort if second number is same as first', () {
         final bst = BinarySearchTree('2')..insert('2');
 
         expect(bst.sortedData, equals(['2', '2']));
-      }, skip: true);
+      }, skip: false);
 
       test('can sort if second number is greater than first', () {
         final bst = BinarySearchTree('2')..insert('3');
 
         expect(bst.sortedData, equals(['2', '3']));
-      }, skip: true);
+      }, skip: false);
 
       test('can sort complex tree', () {
         final bst = BinarySearchTree('2')
@@ -86,7 +86,7 @@ void main() {
           ..insert("5");
 
         expect(bst.sortedData, equals(['1', '2', '3', '5', '6', '7']));
-      }, skip: true);
+      }, skip: false);
     });
   });
 }
