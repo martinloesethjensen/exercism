@@ -36,27 +36,27 @@ void main() {
   test("Fours", () {
     final result = Yacht([1, 4, 1, 4, 1]).score(Category.fours);
     expect(result, equals(8));
-  }, skip: true);
+  }, skip: false);
 
   test("Yacht counted as threes", () {
     final result = Yacht([3, 3, 3, 3, 3]).score(Category.threes);
     expect(result, equals(15));
-  }, skip: true);
+  }, skip: false);
 
   test("Yacht of 3s counted as fives", () {
     final result = Yacht([3, 3, 3, 3, 3]).score(Category.fives);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Fives", () {
     final result = Yacht([1, 5, 3, 5, 3]).score(Category.fives);
     expect(result, equals(10));
-  }, skip: true);
+  }, skip: false);
 
   test("Sixes", () {
     final result = Yacht([2, 3, 4, 5, 6]).score(Category.sixes);
     expect(result, equals(6));
-  }, skip: true);
+  }, skip: false);
 
   test("Full house two small, three big", () {
     final result = Yacht([2, 2, 4, 4, 4]).score(Category.full_house);

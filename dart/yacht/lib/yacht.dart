@@ -7,19 +7,14 @@ class Yacht {
 
   int score(Category category) {
     return switch (category) {
-      // TODO: Handle this case.
-      Category.ones => scores.where((score) => score == 1).length,
-      // TODO: Handle this case.
-      Category.twos => scores.where((score) => score == 2).length * 2,
-      // TODO: Handle this case.
-      Category.threes => throw UnimplementedError(),
-      // TODO: Handle this case.
-      Category.fours => throw UnimplementedError(),
-      // TODO: Handle this case.
-      Category.fives => throw UnimplementedError(),
-      // TODO: Handle this case.
-      Category.sixes => throw UnimplementedError(),
-      // TODO: Handle this case.
+      Category.ones ||
+      Category.twos ||
+      Category.threes ||
+      Category.fours ||
+      Category.fives ||
+      Category.sixes =>
+        scores.where((score) => score == category.index + 1).length *
+            (category.index + 1),
       Category.full_house => throw UnimplementedError(),
       // TODO: Handle this case.
       Category.four_of_a_kind => throw UnimplementedError(),
