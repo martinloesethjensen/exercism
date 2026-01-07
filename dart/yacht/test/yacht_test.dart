@@ -11,7 +11,7 @@ void main() {
   test("Not Yacht", () {
     final result = Yacht([1, 3, 3, 2, 5]).score(Category.yacht);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Ones", () {
     final result = Yacht([1, 1, 1, 3, 5]).score(Category.ones);
@@ -61,90 +61,90 @@ void main() {
   test("Full house two small, three big", () {
     final result = Yacht([2, 2, 4, 4, 4]).score(Category.full_house);
     expect(result, equals(16));
-  }, skip: true);
+  }, skip: false);
 
   test("Full house three small, two big", () {
     final result = Yacht([5, 3, 3, 5, 3]).score(Category.full_house);
     expect(result, equals(19));
-  }, skip: true);
+  }, skip: false);
 
   test("Two pair is not a full house", () {
     final result = Yacht([2, 2, 4, 4, 5]).score(Category.full_house);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Four of a kind is not a full house", () {
     final result = Yacht([1, 4, 4, 4, 4]).score(Category.full_house);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Yacht is not a full house", () {
     final result = Yacht([2, 2, 2, 2, 2]).score(Category.full_house);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Four of a Kind", () {
     final result = Yacht([6, 6, 4, 6, 6]).score(Category.four_of_a_kind);
     expect(result, equals(24));
-  }, skip: true);
+  }, skip: false);
 
   test("Yacht can be scored as Four of a Kind", () {
     final result = Yacht([3, 3, 3, 3, 3]).score(Category.four_of_a_kind);
     expect(result, equals(12));
-  }, skip: true);
+  }, skip: false);
 
   test("Full house is not Four of a Kind", () {
     final result = Yacht([3, 3, 3, 5, 5]).score(Category.four_of_a_kind);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Little Straight", () {
     final result = Yacht([3, 5, 4, 1, 2]).score(Category.little_straight);
     expect(result, equals(30));
-  }, skip: true);
+  }, skip: false);
 
   test("Little Straight as Big Straight", () {
     final result = Yacht([1, 2, 3, 4, 5]).score(Category.big_straight);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Four in order but not a little straight", () {
     final result = Yacht([1, 1, 2, 3, 4]).score(Category.little_straight);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("No pairs but not a little straight", () {
     final result = Yacht([1, 2, 3, 4, 6]).score(Category.little_straight);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Minimum is 1, maximum is 5, but not a little straight", () {
     final result = Yacht([1, 1, 3, 4, 5]).score(Category.little_straight);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Big Straight", () {
     final result = Yacht([4, 6, 2, 5, 3]).score(Category.big_straight);
     expect(result, equals(30));
-  }, skip: true);
+  }, skip: false);
 
   test("Big Straight as little straight", () {
     final result = Yacht([6, 5, 4, 3, 2]).score(Category.little_straight);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("No pairs but not a big straight", () {
     final result = Yacht([6, 5, 4, 3, 1]).score(Category.big_straight);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Choice", () {
     final result = Yacht([3, 3, 5, 6, 6]).score(Category.choice);
     expect(result, equals(23));
-  }, skip: true);
+  }, skip: false);
 
   test("Yacht as choice", () {
     final result = Yacht([2, 2, 2, 2, 2]).score(Category.choice);
     expect(result, equals(10));
-  }, skip: true);
+  }, skip: false);
 }
