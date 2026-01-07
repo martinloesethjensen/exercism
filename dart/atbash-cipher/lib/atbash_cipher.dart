@@ -1,5 +1,6 @@
 class AtbashCipher {
-  final calculatedCodeUnit = 'a'.codeUnitAt(0) + 'z'.codeUnitAt(0);
+  // 'a'.codeUnitAt(0) + 'z'.codeUnitAt(0);
+  static const int _calculatedCodeUnit = 219;
 
   String _cipher(String s, {required bool encode}) {
     final cleaned = s.cleaned;
@@ -7,7 +8,7 @@ class AtbashCipher {
     for (int i = 0; i < cleaned.length; i++) {
       final char = cleaned[i];
       if (char.isLetter) {
-        result += String.fromCharCode(calculatedCodeUnit - char.codeUnitAt(0));
+        result += String.fromCharCode(_calculatedCodeUnit - char.codeUnitAt(0));
       } else {
         // We know we have a number now
         result += char;
