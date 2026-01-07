@@ -4,24 +4,25 @@ class AtbashCipher {
 
   String _cipher(String s, {required bool encode}) {
     final cleaned = s.cleaned;
-    String result = '';
+    StringBuffer result = StringBuffer();
     for (int i = 0; i < cleaned.length; i++) {
       final char = cleaned[i];
       if (char.isLetter) {
-        result += String.fromCharCode(_calculatedCodeUnit - char.codeUnitAt(0));
+        result.write(
+            String.fromCharCode(_calculatedCodeUnit - char.codeUnitAt(0)));
       } else {
         // We know we have a number now
-        result += char;
+        result.write(char);
       }
       if (encode) {
         // Spacing every fifth char added
         final iPlusOne = (i + 1);
         if (iPlusOne != cleaned.length && iPlusOne % 5 == 0) {
-          result += ' ';
+          result.write(' ');
         }
       }
     }
-    return result;
+    return result.toString();
   }
 
   String encode(String s) => _cipher(s, encode: true);
