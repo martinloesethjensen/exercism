@@ -16,22 +16,22 @@ void main() {
   test("Ones", () {
     final result = Yacht([1, 1, 1, 3, 5]).score(Category.ones);
     expect(result, equals(3));
-  }, skip: true);
+  }, skip: false);
 
   test("Ones, out of order", () {
     final result = Yacht([3, 1, 1, 5, 1]).score(Category.ones);
     expect(result, equals(3));
-  }, skip: true);
+  }, skip: false);
 
   test("No ones", () {
     final result = Yacht([4, 3, 6, 5, 5]).score(Category.ones);
     expect(result, equals(0));
-  }, skip: true);
+  }, skip: false);
 
   test("Twos", () {
     final result = Yacht([2, 3, 4, 5, 6]).score(Category.twos);
     expect(result, equals(2));
-  }, skip: true);
+  }, skip: false);
 
   test("Fours", () {
     final result = Yacht([1, 4, 1, 4, 1]).score(Category.fours);
