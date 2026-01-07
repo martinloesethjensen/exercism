@@ -4,6 +4,17 @@ import 'package:test/test.dart';
 void main() {
   final atbashCipher = AtbashCipher();
 
+  group('string extensions', () {
+    test('isLetter', () {
+      expect('a'.isLetter, isTrue);
+      expect('z'.isLetter, isTrue);
+      expect('A'.isLetter, isTrue);
+      expect('Z'.isLetter, isTrue);
+      expect('1'.isLetter, isFalse);
+      expect('!'.isLetter, isFalse);
+    });
+  });
+
   group('AtbashCipher', () {
     group('encode', () {
       test('encode yes', () {
@@ -14,37 +25,38 @@ void main() {
       test('encode no', () {
         final result = atbashCipher.encode("no");
         expect(result, equals("ml"));
-      }, skip: true);
+      }, skip: false);
 
       test('encode OMG', () {
         final result = atbashCipher.encode("OMG");
         expect(result, equals("lnt"));
-      }, skip: true);
+      }, skip: false);
 
       test('encode spaces', () {
         final result = atbashCipher.encode("O M G");
         expect(result, equals("lnt"));
-      }, skip: true);
+      }, skip: false);
 
       test('encode mindblowingly', () {
         final result = atbashCipher.encode("mindblowingly");
         expect(result, equals("nrmwy oldrm tob"));
-      }, skip: true);
+      }, skip: false);
 
       test('encode numbers', () {
         final result = atbashCipher.encode("Testing,1 2 3, testing.");
         expect(result, equals("gvhgr mt123 gvhgr mt"));
-      }, skip: true);
+      }, skip: false);
 
       test('encode deep thought', () {
         final result = atbashCipher.encode("Truth is fiction.");
         expect(result, equals("gifgs rhurx grlm"));
-      }, skip: true);
+      }, skip: false);
 
       test('encode all the letters', () {
-        final result = atbashCipher.encode("The quick brown fox jumps over the lazy dog.");
+        final result =
+            atbashCipher.encode("The quick brown fox jumps over the lazy dog.");
         expect(result, equals("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt"));
-      }, skip: true);
+      }, skip: false);
     });
 
     group('decode', () {
@@ -54,7 +66,8 @@ void main() {
       }, skip: true);
 
       test('decode a sentence', () {
-        final result = atbashCipher.decode("zmlyh gzxov rhlug vmzhg vkkrm thglm v");
+        final result =
+            atbashCipher.decode("zmlyh gzxov rhlug vmzhg vkkrm thglm v");
         expect(result, equals("anobstacleisoftenasteppingstone"));
       }, skip: true);
 
@@ -64,7 +77,8 @@ void main() {
       }, skip: true);
 
       test('decode all the letters', () {
-        final result = atbashCipher.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt");
+        final result =
+            atbashCipher.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt");
         expect(result, equals("thequickbrownfoxjumpsoverthelazydog"));
       }, skip: true);
 
