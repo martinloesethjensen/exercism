@@ -63,34 +63,34 @@ void main() {
       test('decode exercism', () {
         final result = atbashCipher.decode("vcvix rhn");
         expect(result, equals("exercism"));
-      }, skip: true);
+      }, skip: false);
 
       test('decode a sentence', () {
         final result =
             atbashCipher.decode("zmlyh gzxov rhlug vmzhg vkkrm thglm v");
         expect(result, equals("anobstacleisoftenasteppingstone"));
-      }, skip: true);
+      }, skip: false);
 
       test('decode numbers', () {
         final result = atbashCipher.decode("gvhgr mt123 gvhgr mt");
         expect(result, equals("testing123testing"));
-      }, skip: true);
+      }, skip: false);
 
       test('decode all the letters', () {
         final result =
             atbashCipher.decode("gsvjf rxpyi ldmul cqfnk hlevi gsvoz abwlt");
         expect(result, equals("thequickbrownfoxjumpsoverthelazydog"));
-      }, skip: true);
+      }, skip: false);
 
       test('decode with too many spaces', () {
         final result = atbashCipher.decode("vc vix    r hn");
         expect(result, equals("exercism"));
-      }, skip: true);
+      }, skip: false);
 
       test('decode with no spaces', () {
         final result = atbashCipher.decode("zmlyhgzxovrhlugvmzhgvkkrmthglmv");
         expect(result, equals("anobstacleisoftenasteppingstone"));
-      }, skip: true);
+      }, skip: false);
     });
   });
 }
