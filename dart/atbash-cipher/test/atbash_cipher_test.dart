@@ -4,17 +4,6 @@ import 'package:test/test.dart';
 void main() {
   final atbashCipher = AtbashCipher();
 
-  group('string extensions', () {
-    test('isLetter', () {
-      expect('a'.isLetter, isTrue);
-      expect('z'.isLetter, isTrue);
-      expect('A'.isLetter, isTrue);
-      expect('Z'.isLetter, isTrue);
-      expect('1'.isLetter, isFalse);
-      expect('!'.isLetter, isFalse);
-    });
-  });
-
   group('AtbashCipher', () {
     group('encode', () {
       test('encode yes', () {

@@ -7,7 +7,10 @@ class AtbashCipher {
     StringBuffer result = StringBuffer();
     for (int i = 0; i < cleaned.length; i++) {
       final char = cleaned[i];
-      if (char.isLetter) {
+      final codeUnit = char.codeUnitAt(0);
+
+      // Check if the character is a letter by using the code unit range from a to z
+      if (codeUnit >= 97 && codeUnit <= 122) {
         result.write(
             String.fromCharCode(_calculatedCodeUnit - char.codeUnitAt(0)));
       } else {
@@ -31,10 +34,6 @@ class AtbashCipher {
 }
 
 extension StringExt on String {
-  bool get isLetter {
-    return RegExp('[a-zA-Z]').hasMatch(this);
-  }
-
   String get cleaned {
     return toLowerCase().replaceAll(RegExp('[^a-z0-9]'), '');
   }
