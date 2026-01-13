@@ -26,6 +26,8 @@ extension ListExt<T> on List<T> {
 
     outerLoop:
     for (var index = 0; index < length; index++) {
+      if ((length - index) < otherLength) break;
+
       for (var i = 0; i < otherLength; i++) {
         if (this[index + i] != other[i]) {
           continue outerLoop;
