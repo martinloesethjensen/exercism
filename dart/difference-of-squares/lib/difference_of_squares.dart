@@ -1,18 +1,10 @@
-import 'dart:math';
-
 class DifferenceOfSquares {
   num squareOfSum(int i) {
-    return pow(
-      List.generate(i, (index) => index + 1).fold(0, (prev, cur) => prev + cur),
-      2,
-    );
+    final sum = i * (i + 1) ~/ 2;
+    return sum * sum;
   }
 
-  num sumOfSquares(int i) {
-    return List.generate(i, (index) => index + 1).reduce(
-      (value, element) => value + pow(element, 2).toInt(),
-    );
-  }
+  num sumOfSquares(int i) => i * (i + 1) * (2 * i + 1) ~/ 6;
 
   num differenceOfSquares(int i) => squareOfSum(i) - sumOfSquares(i);
 }
