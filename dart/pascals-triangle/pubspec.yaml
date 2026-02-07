@@ -1,7 +1,7 @@
-name: 'pascals_triangle'
+name: "pascals_triangle"
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: ">=3.10.0 <4.0.0"
 dev_dependencies:
-  test: '<2.0.0'
+  test: "<2.0.0"
 dependencies:
-  collection: ^1.17.1
+  collection: ^1.19.1

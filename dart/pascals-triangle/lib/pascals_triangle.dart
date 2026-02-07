@@ -1,16 +1,20 @@
 typedef Rows = List<List<int>>;
 
 class PascalsTriangle {
-  Rows rows(int rows) => List.generate(
-        rows,
-        (outerIndex) => List.generate(
-          outerIndex + 1,
-          (innerIndex) => pascalFormula(outerIndex, innerIndex),
-        ),
-      );
-
-  int factorial(int n) => n == 0 ? 1 : n * factorial(n - 1);
-
-  int pascalFormula(int n, int k) =>
-      factorial(n) ~/ (factorial(k) * factorial(n - k));
+  Rows rows(int rows) {
+    if (rows <= 0) return Rows.empty();
+    final Rows triangle = [
+      [1],
+    ];
+    for (var i = 1; i < rows; i++) {
+      final prevRow = triangle[i - 1];
+      final currRow = [1];
+      for (var j = 1; j < i; j++) {
+        currRow.add(prevRow[j - 1] + prevRow[j]);
+      }
+      currRow.add(1);
+      triangle.add(currRow);
+    }
+    return triangle;
+  }
 }
