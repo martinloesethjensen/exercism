@@ -1,34 +1,35 @@
 class Anagram {
-  List<String> findAnagrams(String s, List<String> words) {
-    final str = s.toLowerCase().split('');
+  List<String> findAnagrams(String target, List<String> words) {
+    final lowerTarget = target.toLowerCase();
+    final targetFrequency = _getFrequency(lowerTarget);
+    final results = <String>[];
 
-    return words
+    for (final word in words) {
+      if (word.length != target.length) continue;
+      final lowerWord = word.toLowerCase();
+      if (lowerTarget == lowerWord) continue;
+      if (_isAnagram(lowerWord, targetFrequency)) results.add(word);
+    }
 
-        /// must have same lenght
-        .where((word) => word.length == str.length)
+    return results;
+  }
 
-        /// can't be the same
-        .where((word) => word.toLowerCase() != str.join())
+  List<int> _getFrequency(String str) {
+    final counts = List.filled(26, 0); // assuming a-z alphabet
+    for (final charCode in str.codeUnits) {
+      // 97 => 'a'
+      counts[charCode - 97]++;
+    }
+    return counts;
+  }
 
-        /// rules:
-        /// - all characters must be present in the word
-        /// - check that there's the same amount of characters
-        ///   being filled
-        .where(
-      (word) {
-        final characters = word.toLowerCase().split('');
-
-        return characters.every(
-          (character) {
-            final count = characters.where((c) => c == character).length;
-            final checkCount = str.where((c) => c == character).length;
-
-            if (checkCount != count) return false;
-
-            return str.contains(character);
-          },
-        );
-      },
-    ).toList();
+  bool _isAnagram(String word, List<int> targetFrequency) {
+    final counts = List.filled(26, 0);
+    for (final charCode in word.codeUnits) {
+      final index = charCode - 97;
+      counts[index]++;
+      if (counts[index] > targetFrequency[index]) return false;
+    }
+    return true;
   }
 }
