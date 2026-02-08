@@ -2,13 +2,23 @@ class GradeSchool {
   Map<int, List<String>> _roster = {};
   Set<String> _allNames = {};
 
+  List<String>? _cachedRoster;
+  bool _isDirty = true;
+
   List<String> roster() {
+    if (!_isDirty && _cachedRoster != null) {
+      return List.unmodifiable(_cachedRoster!);
+    }
+
     final sortedByGrade = _roster.entries.toList()
       ..sort((a, b) => a.key.compareTo(b.key));
-    final result = [
+
+    _cachedRoster = [
       for (final entry in sortedByGrade) ...grade(entry.key),
     ];
-    return result;
+
+    _isDirty = false;
+    return List.unmodifiable(_cachedRoster!);
   }
 
   List<bool> add(List<(String, int)> list) {
@@ -22,6 +32,7 @@ class GradeSchool {
         result.add(true);
         _roster.putIfAbsent(student.$2, () => <String>[]).add(name);
         _allNames.add(name);
+        _isDirty = true;
       }
     }
 
