@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class LargestSeriesProduct {
   int largestProduct(String input, int span) {
     if (span == 0) return 1;
@@ -29,7 +31,7 @@ class LargestSeriesProduct {
         result *= numbers[i + j];
       }
 
-      if (result > largestProduct) largestProduct = result;
+      largestProduct = max(largestProduct, result);
     }
 
     return largestProduct;
