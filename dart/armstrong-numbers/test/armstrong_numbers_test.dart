@@ -51,14 +51,16 @@ void main() {
     }, skip: false);
 
     test('Armstrong number containing seven zeroes', () {
-      final result = armstrongNumbers
-          .isArmstrongNumber('186709961001538790100634132976990');
+      final result = armstrongNumbers.isArmstrongNumber(
+        '186709961001538790100634132976990',
+      );
       expect(result, equals(true));
     }, skip: false);
 
     test('The largest and last Armstrong number', () {
-      final result = armstrongNumbers
-          .isArmstrongNumber('115132219018763992565095597973971522401');
+      final result = armstrongNumbers.isArmstrongNumber(
+        '115132219018763992565095597973971522401',
+      );
       expect(result, equals(true));
     }, skip: false);
   });

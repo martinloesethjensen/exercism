@@ -4,7 +4,8 @@ class Position {
   Position(this.x, this.y);
 
   @override
-  bool operator ==(Object other) => other is Position && other.x == this.x && other.y == this.y;
+  bool operator ==(Object other) =>
+      other is Position && other.x == this.x && other.y == this.y;
 
   @override
   int get hashCode {

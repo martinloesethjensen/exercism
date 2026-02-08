@@ -5,13 +5,17 @@ final differenceOfSquares = DifferenceOfSquares();
 
 void main() {
   group(
-      'DifferenceOfSquares: Square the sum of the numbers up to the given number - ',
-      squareTheSumOfTheNumbersUpToTheGivenNumber);
+    'DifferenceOfSquares: Square the sum of the numbers up to the given number - ',
+    squareTheSumOfTheNumbersUpToTheGivenNumber,
+  );
   group(
-      'DifferenceOfSquares: Sum the squares of the numbers up to the given number - ',
-      sumTheSquaresOfTheNumbersUpToTheGivenNumber);
-  group('DifferenceOfSquares: Subtract sum of squares from square of sums - ',
-      subtractSumOfSquaresFromSquareOfSums);
+    'DifferenceOfSquares: Sum the squares of the numbers up to the given number - ',
+    sumTheSquaresOfTheNumbersUpToTheGivenNumber,
+  );
+  group(
+    'DifferenceOfSquares: Subtract sum of squares from square of sums - ',
+    subtractSumOfSquaresFromSquareOfSums,
+  );
 }
 
 void squareTheSumOfTheNumbersUpToTheGivenNumber() {
