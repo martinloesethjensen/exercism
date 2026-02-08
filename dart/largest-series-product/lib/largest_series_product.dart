@@ -7,24 +7,26 @@ class LargestSeriesProduct {
 
     if (span < 0) throw ArgumentError('span must not be negative');
 
+    final numbers = input.split("").map((char) {
+      final number = int.tryParse(char);
+      if (number == null)
+        throw ArgumentError('digits input must only contain digits');
+      return number;
+    }).toList();
+
     var largestProduct = 0;
 
     for (var i = 0; i <= input.length - span; i++) {
-      final root = int.tryParse(input[i]);
+      final number = numbers[i];
 
-      if (root == null)
-        throw ArgumentError('digits input must only contain digits');
+      if (number < 0) throw ArgumentError('span must not be negative');
 
-      if (root < 0) throw ArgumentError('span must not be negative');
+      if (number == 0) continue;
 
-      if (root == 0) continue;
-
-      var result = root;
+      var result = number;
 
       for (var j = 1; j < span; j++) {
-        final number = int.tryParse(input[i + j]);
-        if (number == null) break;
-        result *= number;
+        result *= numbers[i + j];
       }
 
       if (result > largestProduct) largestProduct = result;
